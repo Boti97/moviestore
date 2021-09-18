@@ -26,6 +26,12 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.security:spring-security-test")
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+    implementation("io.jsonwebtoken:jjwt:0.5.1")
+
+
 }
 
 tasks.withType<KotlinCompile> {
