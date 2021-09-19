@@ -13,7 +13,12 @@ class UserService {
         return ResponseEntity(reponseMessage, HttpStatus.OK)
     }
 
-    fun login(email: String, password: String): ResponseEntity<StringResponseDTO>{
+    fun login(email: String, password: String): ResponseEntity<StringResponseDTO> {
+        val reponseMessage = StringResponseDTO("Success")
+        return ResponseEntity(reponseMessage, HttpStatus.OK)
+    }
+
+    fun deleteUser(userId: String): ResponseEntity<StringResponseDTO> {
         val reponseMessage = StringResponseDTO("Success")
         return ResponseEntity(reponseMessage, HttpStatus.OK)
     }

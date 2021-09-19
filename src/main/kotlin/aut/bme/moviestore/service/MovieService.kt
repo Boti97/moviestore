@@ -36,4 +36,9 @@ class MovieService {
         val response = of(MovieDetailsResponseDTO("id", "title", LocalDate.MAX, "director"))
         return ResponseEntity(response, HttpStatus.OK)
     }
+
+    fun deleteMovie(id: String): ResponseEntity<StringResponseDTO> {
+        val reponseMessage = StringResponseDTO("")
+        return ResponseEntity(reponseMessage, HttpStatus.OK)
+    }
 }

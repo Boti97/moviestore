@@ -1,6 +1,7 @@
 package aut.bme.moviestore.security
 
 import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils
 import java.util.*
@@ -25,9 +26,7 @@ class JWTTokenGenerator {
             )
             .setIssuedAt(Date(System.currentTimeMillis()))
             .setExpiration(Date(System.currentTimeMillis() + 600000))
-            /*.signWith(
-                SignatureAlgorithm()
-                secretKey.toByteArray())*/
+            .signWith(SignatureAlgorithm.ES256, secretKey.toByteArray())
             .compact()
         return "Bearer $token"
     }
