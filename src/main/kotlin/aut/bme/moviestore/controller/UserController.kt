@@ -2,6 +2,7 @@ package aut.bme.moviestore.controller
 
 import aut.bme.moviestore.data.dto.response.MovieDetailsResponseDTO
 import aut.bme.moviestore.data.dto.response.StringResponseDTO
+import aut.bme.moviestore.data.dto.response.UserResponseDTO
 import aut.bme.moviestore.service.MovieService
 import aut.bme.moviestore.service.UserService
 import org.slf4j.Logger
@@ -30,7 +31,7 @@ class UserController(private val userService: UserService, private val movieServ
     fun login(
         @RequestParam(value = "email") email: String,
         @RequestParam(value = "password") password: String
-    ): ResponseEntity<StringResponseDTO> {
+    ): ResponseEntity<UserResponseDTO> {
         logger.info("Logging in with email/password.")
         return userService.login(email, password)
     }
