@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
 
 @RestController
-@RequestMapping("/movie")
+@RequestMapping("/movies")
 class MovieController(private val movieService: MovieService) {
 
     private val logger: Logger = LoggerFactory.getLogger(MovieController::class.java)
