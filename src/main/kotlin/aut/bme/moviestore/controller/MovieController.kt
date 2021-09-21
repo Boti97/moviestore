@@ -1,7 +1,6 @@
 package aut.bme.moviestore.controller
 
-import aut.bme.moviestore.data.dto.response.MovieDetailsResponseDTO
-import aut.bme.moviestore.data.dto.response.StringResponseDTO
+import aut.bme.moviestore.data.dto.response.ResponseDTO
 import aut.bme.moviestore.service.MovieService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -20,7 +19,7 @@ class MovieController(private val movieService: MovieService) {
     @GetMapping("/title")
     fun getMoviesByTitle(
         @RequestParam(value = "title") title: String,
-    ): ResponseEntity<List<MovieDetailsResponseDTO>> {
+    ): ResponseEntity<ResponseDTO> {
         return movieService.getMoviesByTitle(title)
     }
 
@@ -28,22 +27,33 @@ class MovieController(private val movieService: MovieService) {
     @GetMapping("/releaseDate")
     fun getMoviesByReleaseDate(
         @RequestParam(value = "releaseDate") releaseDate: String
-    ): ResponseEntity<List<MovieDetailsResponseDTO>> {
-        return movieService.getMoviesByReleaseDate(LocalDate.parse(releaseDate))
+    ): ResponseEntity<ResponseDTO> {
+        return movieService.getMoviesByReleaseDate(releaseDate)
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/director")
     fun getMoviesByDirector(
         @RequestParam(value = "director") director: String
-    ): ResponseEntity<List<MovieDetailsResponseDTO>> {
+    ): ResponseEntity<ResponseDTO> {
         return movieService.getMoviesByDirector(director)
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping(value = ["/{id}"])
-    fun deleteMovie(@PathVariable id: String): ResponseEntity<StringResponseDTO> {
+    @DeleteMapping("/{id}")
+    fun deleteMovie(@PathVariable id: String): ResponseEntity<ResponseDTO> {
         logger.info("Deleting user with id: {}", id)
         return movieService.deleteMovie(id)
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PostMapping
+    fun addMovie(
+        @RequestParam(value = "title") title: String,
+        @RequestParam(value = "director") director: String,
+        @RequestParam(value = "release_date") releaseDate: String
+    ): ResponseEntity<ResponseDTO> {
+        logger.info("Adding movie.")
+        return movieService.addMovie(title, director, releaseDate)
     }
 }

@@ -6,8 +6,7 @@ import java.time.LocalDate
 
 interface MovieRepository : CrudRepository<Movie, String> {
     fun findAllByDirector(director: String): List<Movie>
-
     fun findAllByReleaseDate(releaseDate: LocalDate): List<Movie>
-
     fun findAllByTitle(title: String): List<Movie>
+    fun existsByTitle(title: String): Boolean
 }

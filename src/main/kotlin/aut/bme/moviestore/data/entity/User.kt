@@ -1,7 +1,5 @@
 package aut.bme.moviestore.data.entity
 
-import aut.bme.moviestore.data.dto.response.UserDetailsResponseDTO
-import aut.bme.moviestore.data.dto.response.UserResponseDTO
 import aut.bme.moviestore.data.util.Role
 import javax.persistence.*
 
@@ -32,10 +30,14 @@ class User(
 
     @ElementCollection
     @Column(name = "favorite_movie_ids")
-    var favoriteMovieIds: List<String>
+    var favoriteMovieIds: MutableList<String>
 ) {
 
-    fun addFavoriteMovie(movieId: String) = favoriteMovieIds.plus(movieId)
+    fun addFavoriteMovie(movieId: String) {
+        favoriteMovieIds.add(movieId)
+    }
 
-    fun removeFavoriteMove(movieId: String) = favoriteMovieIds.minus(movieId)
+    fun removeFavoriteMove(movieId: String) {
+        favoriteMovieIds.remove(movieId)
+    }
 }

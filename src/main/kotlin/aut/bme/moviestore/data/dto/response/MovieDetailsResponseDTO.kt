@@ -12,6 +12,6 @@ class MovieDetailsResponseDTO(
 ) {
     companion object {
         fun createFromMovie(movie: Movie) =
-            MovieDetailsResponseDTO(movie.id, movie.title, movie.releaseDate, movie.director)
+            MovieDetailsResponseDTO(movie.id!!, movie.title, movie.releaseDate!!, movie.director!!)
     }
 }

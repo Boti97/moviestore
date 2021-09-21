@@ -27,7 +27,7 @@ class JWTTokenGenerator {
                 )
                 .setIssuedAt(Date(System.currentTimeMillis()))
                 .setExpiration(Date(System.currentTimeMillis() + 600000))
-                .signWith(SignatureAlgorithm.ES256, secretKey.toByteArray())
+                .signWith(SignatureAlgorithm.HS256, secretKey.toByteArray())
                 .compact()
             return "Bearer $token"
         }

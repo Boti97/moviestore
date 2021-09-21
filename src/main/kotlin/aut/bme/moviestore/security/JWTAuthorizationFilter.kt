@@ -61,7 +61,6 @@ class JWTAuthorizationFilter : OncePerRequestFilter() {
             claims.getSubject(),
             null,
             authorities!!.stream().map { SimpleGrantedAuthority(it) }.toList()
-            //claims["authorities"].stream().map<Any> { SimpleGrantedAuthority() }.collect(Collectors.toList())
         )
         SecurityContextHolder.getContext().setAuthentication(auth)
     }

@@ -1,8 +1,6 @@
 package aut.bme.moviestore.controller
 
-import aut.bme.moviestore.data.dto.response.MovieDetailsResponseDTO
-import aut.bme.moviestore.data.dto.response.StringResponseDTO
-import aut.bme.moviestore.data.dto.response.UserResponseDTO
+import aut.bme.moviestore.data.dto.response.ResponseDTO
 import aut.bme.moviestore.service.MovieService
 import aut.bme.moviestore.service.UserService
 import org.slf4j.Logger
@@ -22,7 +20,7 @@ class UserController(private val userService: UserService, private val movieServ
         @RequestParam(value = "name") name: String,
         @RequestParam(value = "email") email: String,
         @RequestParam(value = "password") password: String
-    ): ResponseEntity<StringResponseDTO> {
+    ): ResponseEntity<ResponseDTO> {
         logger.info("Registering user.")
         return userService.register(name, email, password)
     }
@@ -31,14 +29,14 @@ class UserController(private val userService: UserService, private val movieServ
     fun login(
         @RequestParam(value = "email") email: String,
         @RequestParam(value = "password") password: String
-    ): ResponseEntity<UserResponseDTO> {
+    ): ResponseEntity<ResponseDTO> {
         logger.info("Logging in with email/password.")
         return userService.login(email, password)
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = ["/{id}"])
-    fun deleteUser(@PathVariable id: String): ResponseEntity<StringResponseDTO> {
+    fun deleteUser(@PathVariable id: String): ResponseEntity<ResponseDTO> {
         logger.info("Deleting user with id: {}", id)
         return userService.deleteUser(id)
     }
@@ -47,16 +45,16 @@ class UserController(private val userService: UserService, private val movieServ
     @GetMapping("/{id}/favorites")
     fun getFavoriteMovies(
         @PathVariable id: String
-    ): ResponseEntity<List<MovieDetailsResponseDTO>> {
+    ): ResponseEntity<ResponseDTO> {
         return movieService.getFavoriteMovies(id)
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @PostMapping("{id}/")
+    @PostMapping("/{id}")
     fun addMovieToFavorites(
-        @RequestParam(value = "userId") userId: String,
+        @PathVariable id: String,
         @RequestParam(value = "movieId") movieId: String
-    ): ResponseEntity<StringResponseDTO> {
-        return movieService.addMovieToFavorites(userId, movieId)
+    ): ResponseEntity<ResponseDTO> {
+        return movieService.addMovieToFavorites(id, movieId)
     }
 }
