@@ -17,7 +17,7 @@ class MovieService(private val movieRepository: MovieRepository, private val use
 
     fun getMoviesByTitle(title: String): ResponseEntity<ResponseDTO> {
         val movieResponseDTOs =
-            movieRepository.findAllByTitle(title).stream().map { MovieDetailsResponseDTO.createFromMovie(it) }.toList()
+            movieRepository.findAllByTitleContaining(title).stream().map { MovieDetailsResponseDTO.createFromMovie(it) }.toList()
         val responseDTO = ResponseDTO(true, "Success.", movieResponseDTOs)
         return ResponseEntity(responseDTO, HttpStatus.OK)
     }
@@ -47,7 +47,7 @@ class MovieService(private val movieRepository: MovieRepository, private val use
 
     fun getMoviesByDirector(director: String): ResponseEntity<ResponseDTO> {
         val movieResponseDTOs =
-            movieRepository.findAllByDirector(director).stream().map { MovieDetailsResponseDTO.createFromMovie(it) }
+            movieRepository.findAllByDirectorContaining(director).stream().map { MovieDetailsResponseDTO.createFromMovie(it) }
                 .toList()
         val responseDTO = ResponseDTO(true, "Success.", movieResponseDTOs)
         return ResponseEntity(responseDTO, HttpStatus.OK)
@@ -85,7 +85,7 @@ class MovieService(private val movieRepository: MovieRepository, private val use
     }
 
     fun addMovie(title: String, director: String?, releaseDate: String?): ResponseEntity<ResponseDTO> {
-        if (movieRepository.existsByTitle(title)) {
+        if (movieRepository.existsByTitleContaining(title)) {
             return ResponseEntity(ResponseDTO(false, "Movie with title already exist.", null), HttpStatus.BAD_REQUEST)
         }
         val parsedReleasedDate: LocalDate?

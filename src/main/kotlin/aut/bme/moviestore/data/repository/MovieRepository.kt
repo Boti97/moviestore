@@ -5,8 +5,8 @@ import org.springframework.data.repository.CrudRepository
 import java.time.LocalDate
 
 interface MovieRepository : CrudRepository<Movie, String> {
-    fun findAllByDirector(director: String): List<Movie>
+    fun findAllByDirectorContaining(director: String): List<Movie>
     fun findAllByReleaseDate(releaseDate: LocalDate): List<Movie>
-    fun findAllByTitle(title: String): List<Movie>
-    fun existsByTitle(title: String): Boolean
+    fun findAllByTitleContaining(title: String): List<Movie>
+    fun existsByTitleContaining(title: String): Boolean
 }
