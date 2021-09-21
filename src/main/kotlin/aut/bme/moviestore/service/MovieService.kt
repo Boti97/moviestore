@@ -110,4 +110,16 @@ class MovieService(private val movieRepository: MovieRepository, private val use
             HttpStatus.OK
         )
     }
+
+    fun removeMovieFromFavorites(userId: String, movieId: String): ResponseEntity<ResponseDTO> {
+        if (!userRepository.existsById(userId)) {
+            return ResponseEntity(ResponseDTO(false, "User not found.", null), HttpStatus.BAD_REQUEST)
+        } else if (!movieRepository.existsById(movieId)) {
+            return ResponseEntity(ResponseDTO(false, "There's no such movie.", null), HttpStatus.BAD_REQUEST)
+        }
+        val user = userRepository.findById(userId)
+        user.get().removeFavoriteMove(movieId)
+        userRepository.save(user.get())
+        return ResponseEntity(ResponseDTO(false, "Successfully removed from favorites.", null), HttpStatus.OK)
+    }
 }

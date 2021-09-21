@@ -50,11 +50,20 @@ class UserController(private val userService: UserService, private val movieServ
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/favorites")
     fun addMovieToFavorites(
         @PathVariable id: String,
         @RequestParam(value = "movieId") movieId: String
     ): ResponseEntity<ResponseDTO> {
         return movieService.addMovieToFavorites(id, movieId)
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @DeleteMapping("/{id}/favorites")
+    fun removeMovieFromFavorites(
+        @PathVariable id: String,
+        @RequestParam(value = "movieId") movieId: String
+    ): ResponseEntity<ResponseDTO> {
+        return movieService.removeMovieFromFavorites(id, movieId)
     }
 }
