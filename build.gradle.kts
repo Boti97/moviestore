@@ -30,8 +30,6 @@ dependencies {
     implementation("org.springframework.security:spring-security-test")
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
     implementation("io.jsonwebtoken:jjwt:0.5.1")
-
-
 }
 
 tasks.withType<KotlinCompile> {

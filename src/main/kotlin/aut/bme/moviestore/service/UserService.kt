@@ -52,7 +52,22 @@ class UserService(private val userRepository: UserRepository) {
     }
 
     fun deleteUser(userId: String): ResponseEntity<ResponseDTO> {
-        val reponseMessage = ResponseDTO(true, "Success", null)
-        return ResponseEntity(reponseMessage, HttpStatus.OK)
+        if (!userRepository.existsById(userId)) {
+            return ResponseEntity(
+                ResponseDTO(false, "User does not exist.", null),
+                HttpStatus.BAD_REQUEST
+            )
+        }
+        userRepository.deleteById(userId)
+        if (userRepository.existsById(userId)) {
+            return ResponseEntity(
+                ResponseDTO(false, "User deletion failed.", null),
+                HttpStatus.EXPECTATION_FAILED
+            )
+        }
+        return ResponseEntity(
+            ResponseDTO(true, "User successfully deleted.", null),
+            HttpStatus.OK
+        )
     }
 }

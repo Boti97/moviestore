@@ -17,7 +17,8 @@ class MovieService(private val movieRepository: MovieRepository, private val use
 
     fun getMoviesByTitle(title: String): ResponseEntity<ResponseDTO> {
         val movieResponseDTOs =
-            movieRepository.findAllByTitleContaining(title).stream().map { MovieDetailsResponseDTO.createFromMovie(it) }.toList()
+            movieRepository.findAllByTitleContaining(title).stream().map { MovieDetailsResponseDTO.createFromMovie(it) }
+                .toList()
         val responseDTO = ResponseDTO(true, "Success.", movieResponseDTOs)
         return ResponseEntity(responseDTO, HttpStatus.OK)
     }
@@ -47,7 +48,8 @@ class MovieService(private val movieRepository: MovieRepository, private val use
 
     fun getMoviesByDirector(director: String): ResponseEntity<ResponseDTO> {
         val movieResponseDTOs =
-            movieRepository.findAllByDirectorContaining(director).stream().map { MovieDetailsResponseDTO.createFromMovie(it) }
+            movieRepository.findAllByDirectorContaining(director).stream()
+                .map { MovieDetailsResponseDTO.createFromMovie(it) }
                 .toList()
         val responseDTO = ResponseDTO(true, "Success.", movieResponseDTOs)
         return ResponseEntity(responseDTO, HttpStatus.OK)
@@ -81,6 +83,9 @@ class MovieService(private val movieRepository: MovieRepository, private val use
             return ResponseEntity(ResponseDTO(false, "There's no such movie.", null), HttpStatus.BAD_REQUEST)
         }
         movieRepository.deleteById(movieId)
+        if (movieRepository.existsById(movieId)) {
+            return ResponseEntity(ResponseDTO(false, "Movie deletion failed.", null), HttpStatus.EXPECTATION_FAILED)
+        }
         return ResponseEntity(ResponseDTO(false, "Movie deleted successfully.", null), HttpStatus.OK)
     }
 

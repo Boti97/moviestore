@@ -42,6 +42,7 @@ class MovieStoreApplication : CommandLineRunner {
                 .antMatchers(HttpMethod.POST, "/register").permitAll()
                 .antMatchers(HttpMethod.GET, "/login").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
+            http.headers().frameOptions().disable()
         }
     }
 }
