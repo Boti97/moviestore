@@ -23,3 +23,13 @@ Database:
     - username: empty
     - password: empty
     
+    ![Screenshot 2021-10-04 191413](https://user-images.githubusercontent.com/37210704/135895094-6d3e50f3-9fe7-4815-957f-af2f521c8502.png)
+
+Consider application properties changes:
+  - spring.jpa.hibernate.ddl-auto
+    - update: default value, in our case it creates the db, but does not recreate it on restart
+    - create-drop: creates and drops the db schema on each restart
+  - spring.sql.init.mode=always
+    - on each restart inserts the data from src/main/resources/data.sql
+    - remove after first start if distracting
+
